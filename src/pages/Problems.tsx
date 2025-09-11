@@ -1,4 +1,4 @@
-or import React from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ProblemList } from '../features/problems/problem-list';
 import { Problem } from '../types';
