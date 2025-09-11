@@ -27,7 +27,7 @@ const AppRoutes: React.FC = () => {
   return (
     <Routes>
       {/* Public */}
-      <Route element={<PublicLayout><></></PublicLayout>}>
+      <Route element={<PublicLayout />}> 
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/terms" element={<TermsOfService />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
@@ -41,18 +41,11 @@ const AppRoutes: React.FC = () => {
       </Route>
 
       {/* Protected */}
-      <Route
-        path="/"
-        element={user ? <AppLayout><DashboardPage /></AppLayout> : <Navigate to="/auth" replace />}
-      />
-      <Route
-        path="/problem/:id"
-        element={user ? <AppLayout><ProblemRoute /></AppLayout> : <Navigate to="/auth" replace />}
-      />
-      <Route
-        path="/invoices"
-        element={user ? <AppLayout><Invoices /></AppLayout> : <Navigate to="/auth" replace />}
-      />
+      <Route element={user ? <AppLayout /> : <Navigate to="/auth" replace />}> 
+        <Route path="/" element={<DashboardPage />} />
+        <Route path="/problem/:id" element={<ProblemRoute />} />
+        <Route path="/invoices" element={<Invoices />} />
+      </Route>
 
       {/* Fallback */}
       <Route path="*" element={<Navigate to="/" replace />} />
