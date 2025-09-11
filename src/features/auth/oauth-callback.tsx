@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../../lib/supabase';
+import { supabase, isSupabaseConfigured } from '../../lib/supabase';
 import { LoadingSpinner } from '../../shared/ui/loading-spinner';
 
 export const OAuthCallback: React.FC = () => {
@@ -9,6 +9,11 @@ export const OAuthCallback: React.FC = () => {
   useEffect(() => {
     const handleAuthCallback = async () => {
       try {
+        if (!isSupabaseConfigured || !supabase) {
+          navigate('/auth?error=unconfigured');
+          return;
+        }
+
         const { data, error } = await supabase.auth.getSession();
         
         if (error) {

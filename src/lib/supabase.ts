@@ -3,11 +3,14 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables. Please check your .env.local file.')
-}
+export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey)
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+// Create a client only when configuration exists. In other environments (e.g.,
+// preview deployments without env vars), export a null client so the app can
+// degrade gracefully (e.g., use demo mode).
+export const supabase = isSupabaseConfigured
+  ? createClient(supabaseUrl as string, supabaseAnonKey as string)
+  : null as unknown as ReturnType<typeof createClient>
 
 // Database types (you can generate these from your Supabase dashboard)
 export interface Database {

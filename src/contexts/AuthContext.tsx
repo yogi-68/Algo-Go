@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { User as SupabaseUser } from '@supabase/supabase-js';
-import { supabase } from '../lib/supabase';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 
 interface User {
   id: string;
@@ -42,6 +42,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     // Get initial session
     const getInitialSession = async () => {
+      if (!isSupabaseConfigured || !supabase) {
+        // Degrade gracefully: unauthenticated by default; allow demo login path
+        setIsLoading(false);
+        return;
+      }
+
       const { data: { session } } = await supabase.auth.getSession();
       if (session?.user) {
         setSupabaseUser(session.user);
@@ -66,7 +72,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     getInitialSession();
 
-    // Listen for auth changes
+    // Listen for auth changes (only when configured)
+    if (!isSupabaseConfigured || !supabase) {
+      return;
+    }
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (_event, session) => {
         if (session?.user) {
@@ -116,6 +125,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
 
       // Try Supabase authentication for real users
+      if (!isSupabaseConfigured || !supabase) {
+        // When not configured, disable real login
+        return false;
+      }
+
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -138,6 +152,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const signup = async (email: string, password: string, name?: string): Promise<boolean> => {
     setIsLoading(true);
     try {
+      if (!isSupabaseConfigured || !supabase) {
+        return false;
+      }
+
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -174,9 +192,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
 
       // For Supabase users, sign out from Supabase
-      const { error } = await supabase.auth.signOut();
-      if (error) {
-        console.error('Logout error:', error);
+      if (isSupabaseConfigured && supabase) {
+        const { error } = await supabase.auth.signOut();
+        if (error) {
+          console.error('Logout error:', error);
+        }
       }
       
       // Clear local state
@@ -190,7 +210,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const updateProfile = async (updates: Partial<User>): Promise<boolean> => {
-    if (!supabaseUser) return false;
+    if (!supabaseUser || !isSupabaseConfigured || !supabase) return false;
     
     setIsLoading(true);
     try {
@@ -229,6 +249,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const resetPassword = async (email: string): Promise<boolean> => {
     setIsLoading(true);
     try {
+      if (!isSupabaseConfigured || !supabase) {
+        return false;
+      }
+
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: `${window.location.origin}/reset-password`,
       });
@@ -250,6 +274,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const loginWithGoogle = async (): Promise<{ success: boolean; error?: string }> => {
     setIsLoading(true);
     try {
+      if (!isSupabaseConfigured || !supabase) {
+        return { success: false, error: 'Auth is not configured in this environment.' };
+      }
+
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
