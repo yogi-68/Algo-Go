@@ -3,7 +3,6 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ExecutionProvider } from './contexts/ExecutionContext';
 import { AuthContainer } from './features/auth/auth-container';
-import { ProfilePage } from './features/auth/profile-page';
 import { LoadingSpinner } from './shared/ui/loading-spinner';
 import Pricing from './pages/Pricing';
 import TermsOfService from './pages/TermsOfService';
@@ -16,6 +15,7 @@ import Invoices from './pages/Invoices';
 import HelpCenter from './pages/HelpCenter';
 import Feedback from './pages/Feedback';
 import DashboardPage from './pages/Dashboard';
+import ProblemRoute from './pages/ProblemRoute';
 import AppLayout from './layouts/AppLayout';
 import PublicLayout from './layouts/PublicLayout';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
@@ -44,6 +44,10 @@ const AppRoutes: React.FC = () => {
       <Route
         path="/"
         element={user ? <AppLayout><DashboardPage /></AppLayout> : <Navigate to="/auth" replace />}
+      />
+      <Route
+        path="/problem/:id"
+        element={user ? <AppLayout><ProblemRoute /></AppLayout> : <Navigate to="/auth" replace />}
       />
       <Route
         path="/invoices"
