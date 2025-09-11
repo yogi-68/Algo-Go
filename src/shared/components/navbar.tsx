@@ -17,6 +17,29 @@ export const Navbar: React.FC<NavbarProps> = ({ onProblemsClick, onProfileClick 
 
   const isActive = (path: string) => location.pathname === path;
 
+  // Prefetch route chunks on hover to speed up navigation
+  const prefetch = (route: 'problems' | 'explore' | 'search' | 'pricing' | 'help') => {
+    switch (route) {
+      case 'problems':
+        import('../../pages/Problems');
+        break;
+      case 'explore':
+        import('../../pages/Explore');
+        break;
+      case 'search':
+        import('../../pages/Search');
+        break;
+      case 'pricing':
+        import('../../pages/Pricing');
+        break;
+      case 'help':
+        import('../../pages/HelpCenter');
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <nav className="bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50">
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -37,6 +60,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onProblemsClick, onProfileClick 
           <div className="hidden md:flex items-center space-x-6">
             <a
               href="/problems"
+              onMouseEnter={() => prefetch('problems')}
               className={`font-medium transition-colors ${
                 isActive('/problems') || isActive('/')
                   ? 'text-brand-600 dark:text-brand-400 border-b-2 border-brand-600 dark:border-brand-400'
@@ -47,6 +71,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onProblemsClick, onProfileClick 
             </a>
             <a
               href="/explore"
+              onMouseEnter={() => prefetch('explore')}
               className={`font-medium transition-colors ${
                 isActive('/explore')
                   ? 'text-brand-600 dark:text-brand-400 border-b-2 border-brand-600 dark:border-brand-400'
@@ -57,6 +82,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onProblemsClick, onProfileClick 
             </a>
             <a
               href="/search"
+              onMouseEnter={() => prefetch('search')}
               className={`font-medium transition-colors ${
                 isActive('/search')
                   ? 'text-brand-600 dark:text-brand-400 border-b-2 border-brand-600 dark:border-brand-400'
@@ -67,6 +93,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onProblemsClick, onProfileClick 
             </a>
             <a
               href="/pricing"
+              onMouseEnter={() => prefetch('pricing')}
               className={`font-medium transition-colors ${
                 isActive('/pricing')
                   ? 'text-brand-600 dark:text-brand-400 border-b-2 border-brand-600 dark:border-brand-400'
@@ -78,6 +105,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onProblemsClick, onProfileClick 
             {/* Checkout and Invoices removed from header; available via footer and routes */}
             <a
               href="/help"
+              onMouseEnter={() => prefetch('help')}
               className={`font-medium transition-colors ${
                 isActive('/help')
                   ? 'text-brand-600 dark:text-brand-400 border-b-2 border-brand-600 dark:border-brand-400'
