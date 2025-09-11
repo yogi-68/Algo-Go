@@ -1,14 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ExecutionProvider } from './contexts/ExecutionContext';
-import { Navbar } from './shared/components/navbar';
 import { AuthContainer } from './features/auth/auth-container';
 import { ProfilePage } from './features/auth/profile-page';
-import { ProblemList } from './features/problems/problem-list';
-import { ProblemDetail } from './features/problems/problem-detail';
 import { LoadingSpinner } from './shared/ui/loading-spinner';
-import { Problem } from './types';
 import Pricing from './pages/Pricing';
 import TermsOfService from './pages/TermsOfService';
 import PrivacyPolicy from './pages/PrivacyPolicy';
@@ -19,64 +15,44 @@ import Checkout from './pages/Checkout';
 import Invoices from './pages/Invoices';
 import HelpCenter from './pages/HelpCenter';
 import Feedback from './pages/Feedback';
+import DashboardPage from './pages/Dashboard';
+import AppLayout from './layouts/AppLayout';
+import PublicLayout from './layouts/PublicLayout';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-const AppContent: React.FC = () => {
+const AppRoutes: React.FC = () => {
   const { user, isLoading } = useAuth();
-  const [selectedProblem, setSelectedProblem] = useState<Problem | null>(null);
-  const [showProfile, setShowProfile] = useState(false);
-
-  if (isLoading) {
-    return <LoadingSpinner />;
-  }
-
-  // Public routes (must render before auth gating)
-  const path = typeof window !== 'undefined' ? window.location.pathname : '/';
-  if (path === '/pricing') return <Pricing />;
-  if (path === '/terms' || path === '/terms-and-conditions') return <TermsOfService />;
-  if (path === '/privacy' || path === '/privacy-policy') return <PrivacyPolicy />;
-  if (path === '/refund' || path === '/refund-policy') return <RefundPolicy />;
-  if (path === '/explore') return <Explore />;
-  if (path === '/search') return <SearchPage />;
-  if (path === '/help' || path === '/help-center' || path === '/faq') return <HelpCenter />;
-  if (path === '/feedback' || path === '/bug-report') return <Feedback />;
-  if (path === '/checkout') return <Checkout />;
-  if (path === '/invoices') return <Invoices />;
-
-  // Force show auth when on /auth route, even if a stale session exists
-  if (typeof window !== 'undefined' && path.startsWith('/auth')) {
-    return <AuthContainer />;
-  }
-
-  if (!user) {
-    return <AuthContainer />;
-  }
+  if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Navbar 
-        onProblemsClick={() => {
-          setSelectedProblem(null);
-          setShowProfile(false);
-        }}
-        onProfileClick={() => {
-          setShowProfile(true);
-          setSelectedProblem(null);
-        }}
+    <Routes>
+      {/* Public */}
+      <Route element={<PublicLayout><></></PublicLayout>}>
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/terms" element={<TermsOfService />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/refund" element={<RefundPolicy />} />
+        <Route path="/explore" element={<Explore />} />
+        <Route path="/search" element={<SearchPage />} />
+        <Route path="/help" element={<HelpCenter />} />
+        <Route path="/feedback" element={<Feedback />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/auth" element={<AuthContainer />} />
+      </Route>
+
+      {/* Protected */}
+      <Route
+        path="/"
+        element={user ? <AppLayout><DashboardPage /></AppLayout> : <Navigate to="/auth" replace />}
       />
-      
-      <main>
-        {showProfile ? (
-          <ProfilePage onBack={() => setShowProfile(false)} />
-        ) : selectedProblem ? (
-          <ProblemDetail
-            problem={selectedProblem}
-            onBack={() => setSelectedProblem(null)}
-          />
-        ) : (
-          <ProblemList onProblemSelect={setSelectedProblem} />
-        )}
-      </main>
-    </div>
+      <Route
+        path="/invoices"
+        element={user ? <AppLayout><Invoices /></AppLayout> : <Navigate to="/auth" replace />}
+      />
+
+      {/* Fallback */}
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 };
 
@@ -85,7 +61,9 @@ function App() {
     <ThemeProvider>
       <AuthProvider>
         <ExecutionProvider>
-          <AppContent />
+          <BrowserRouter>
+            <AppRoutes />
+          </BrowserRouter>
         </ExecutionProvider>
       </AuthProvider>
     </ThemeProvider>
