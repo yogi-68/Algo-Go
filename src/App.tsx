@@ -16,6 +16,7 @@ const HelpCenter = React.lazy(() => import('./pages/HelpCenter'));
 const Feedback = React.lazy(() => import('./pages/Feedback'));
 const DashboardPage = React.lazy(() => import('./pages/Dashboard'));
 const ProblemRoute = React.lazy(() => import('./pages/ProblemRoute'));
+const ProblemsPage = React.lazy(() => import('./pages/Problems'));
 import AppLayout from './layouts/AppLayout';
 import PublicLayout from './layouts/PublicLayout';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
@@ -43,7 +44,8 @@ const AppRoutes: React.FC = () => {
 
       {/* Protected */}
       <Route element={user ? <AppLayout /> : <Navigate to="/auth" replace />}> 
-        <Route path="/" element={<DashboardPage />} />
+        <Route path="/" element={<Navigate to="/problems" replace />} />
+        <Route path="/problems" element={<ProblemsPage />} />
         <Route path="/problem/:id" element={<ProblemRoute />} />
         <Route path="/invoices" element={<Invoices />} />
       </Route>

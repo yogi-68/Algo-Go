@@ -34,12 +34,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onProblemsClick, onProfileClick 
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
-            <button
-              onClick={onProblemsClick}
+            <a
+              href="/problems"
               className="font-medium text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
             >
               Problems
-            </button>
+            </a>
             <a href="/explore" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
               Explore
             </a>
@@ -113,12 +113,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onProblemsClick, onProfileClick 
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t border-gray-200 dark:border-gray-700">
             <div className="flex flex-col space-y-3">
-              <button
-                onClick={onProblemsClick}
+              <a
+                href="/problems"
                 className="text-left font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
               >
                 Problems
-              </button>
+              </a>
               <a href="/explore" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">Explore</a>
               <a href="/search" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">Search</a>
               <a href="/pricing" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">Pricing</a>
