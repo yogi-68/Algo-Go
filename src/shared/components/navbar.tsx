@@ -40,17 +40,23 @@ export const Navbar: React.FC<NavbarProps> = ({ onProblemsClick, onProfileClick 
             >
               Problems
             </button>
+            <a href="/explore" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+              Explore
+            </a>
+            <a href="/search" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+              Search
+            </a>
             <a href="/pricing" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
               Pricing
             </a>
-            <a href="/terms" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
-              Terms
+            <a href="/checkout" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+              Checkout
             </a>
-            <a href="/privacy" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
-              Privacy
+            <a href="/invoices" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+              Invoices
             </a>
-            <a href="/refund" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
-              Refunds
+            <a href="/help" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+              Support
             </a>
           </div>
 
@@ -113,7 +119,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onProblemsClick, onProfileClick 
               >
                 Problems
               </button>
+              <a href="/explore" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">Explore</a>
+              <a href="/search" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">Search</a>
               <a href="/pricing" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">Pricing</a>
+              <a href="/checkout" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">Checkout</a>
+              <a href="/invoices" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">Invoices</a>
+              <a href="/help" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">Support</a>
+              <a href="/feedback" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">Feedback</a>
               <a href="/terms" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">Terms</a>
               <a href="/privacy" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">Privacy</a>
               <a href="/refund" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">Refunds</a>

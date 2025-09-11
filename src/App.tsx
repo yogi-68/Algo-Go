@@ -13,6 +13,12 @@ import Pricing from './pages/Pricing';
 import TermsOfService from './pages/TermsOfService';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import RefundPolicy from './pages/RefundPolicy';
+import Explore from './pages/Explore';
+import SearchPage from './pages/Search';
+import Checkout from './pages/Checkout';
+import Invoices from './pages/Invoices';
+import HelpCenter from './pages/HelpCenter';
+import Feedback from './pages/Feedback';
 
 const AppContent: React.FC = () => {
   const { user, isLoading } = useAuth();
@@ -29,6 +35,12 @@ const AppContent: React.FC = () => {
   if (path === '/terms' || path === '/terms-and-conditions') return <TermsOfService />;
   if (path === '/privacy' || path === '/privacy-policy') return <PrivacyPolicy />;
   if (path === '/refund' || path === '/refund-policy') return <RefundPolicy />;
+  if (path === '/explore') return <Explore />;
+  if (path === '/search') return <SearchPage />;
+  if (path === '/help' || path === '/help-center' || path === '/faq') return <HelpCenter />;
+  if (path === '/feedback' || path === '/bug-report') return <Feedback />;
+  if (path === '/checkout') return <Checkout />;
+  if (path === '/invoices') return <Invoices />;
 
   // Force show auth when on /auth route, even if a stale session exists
   if (typeof window !== 'undefined' && path.startsWith('/auth')) {
