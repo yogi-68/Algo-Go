@@ -40,6 +40,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onProblemsClick, onProfileClick 
             >
               Problems
             </button>
+            <a href="/pricing" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+              Pricing
+            </a>
+            <a href="/terms" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+              Terms
+            </a>
+            <a href="/privacy" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+              Privacy
+            </a>
+            <a href="/refund" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+              Refunds
+            </a>
           </div>
 
           {/* Right Side */}
@@ -101,6 +113,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onProblemsClick, onProfileClick 
               >
                 Problems
               </button>
+              <a href="/pricing" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">Pricing</a>
+              <a href="/terms" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">Terms</a>
+              <a href="/privacy" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">Privacy</a>
+              <a href="/refund" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">Refunds</a>
             </div>
           </div>
         )}

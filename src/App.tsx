@@ -9,6 +9,10 @@ import { ProblemList } from './features/problems/problem-list';
 import { ProblemDetail } from './features/problems/problem-detail';
 import { LoadingSpinner } from './shared/ui/loading-spinner';
 import { Problem } from './types';
+import Pricing from './pages/Pricing';
+import TermsOfService from './pages/TermsOfService';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import RefundPolicy from './pages/RefundPolicy';
 
 const AppContent: React.FC = () => {
   const { user, isLoading } = useAuth();
@@ -19,8 +23,15 @@ const AppContent: React.FC = () => {
     return <LoadingSpinner />;
   }
 
+  // Public routes (must render before auth gating)
+  const path = typeof window !== 'undefined' ? window.location.pathname : '/';
+  if (path === '/pricing') return <Pricing />;
+  if (path === '/terms' || path === '/terms-and-conditions') return <TermsOfService />;
+  if (path === '/privacy' || path === '/privacy-policy') return <PrivacyPolicy />;
+  if (path === '/refund' || path === '/refund-policy') return <RefundPolicy />;
+
   // Force show auth when on /auth route, even if a stale session exists
-  if (typeof window !== 'undefined' && window.location.pathname.startsWith('/auth')) {
+  if (typeof window !== 'undefined' && path.startsWith('/auth')) {
     return <AuthContainer />;
   }
 
