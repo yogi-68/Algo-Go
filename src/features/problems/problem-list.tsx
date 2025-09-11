@@ -73,6 +73,23 @@ export const ProblemList: React.FC<ProblemListProps> = ({ onProblemSelect }) => 
     return filtered;
   }, [searchTerm, selectedSource, filters, user?.solvedProblems]);
 
+  // Free plan limits: cap to 3 problems per topic unless Pro (or admin)
+  const hasProAccess = (user?.role === 'admin') || ((user as unknown as { plan?: string })?.plan === 'pro');
+  const visibleProblems = useMemo(() => {
+    if (hasProAccess) return filteredProblems;
+    const perTopicLimit = 3;
+    const topicCounts: Record<string, number> = {};
+    const limited: Problem[] = [];
+    for (const p of filteredProblems) {
+      const key = p.topic;
+      topicCounts[key] = (topicCounts[key] || 0) + 1;
+      if (topicCounts[key] <= perTopicLimit) {
+        limited.push(p);
+      }
+    }
+    return limited;
+  }, [filteredProblems, hasProAccess]);
+
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case 'Easy': return 'text-green-600 dark:text-green-400';
@@ -102,6 +119,13 @@ export const ProblemList: React.FC<ProblemListProps> = ({ onProblemSelect }) => 
           Master algorithms with interactive step-by-step visualizations
         </p>
       </div>
+
+      {!hasProAccess && (
+        <div className="mb-6 p-4 rounded-lg border border-amber-300 bg-amber-50 dark:bg-amber-900/20 dark:border-amber-700 text-amber-900 dark:text-amber-200">
+          You are on the Free plan. Viewing up to 3 problems per topic.{' '}
+          <a href="/checkout" className="underline font-medium">Upgrade to Pro</a> for full access.
+        </div>
+      )}
 
       {/* Source Tabs */}
       <div className="mb-6">
@@ -277,7 +301,7 @@ export const ProblemList: React.FC<ProblemListProps> = ({ onProblemSelect }) => 
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-              {filteredProblems.map((problem: Problem) => {
+              {visibleProblems.map((problem: Problem) => {
                 return (
                   <tr
                     key={problem.id}
@@ -338,7 +362,7 @@ export const ProblemList: React.FC<ProblemListProps> = ({ onProblemSelect }) => 
           </table>
         </div>
 
-        {filteredProblems.length === 0 && (
+        {visibleProblems.length === 0 && (
           <div className="text-center py-12">
             <div className="text-gray-500 dark:text-gray-400">
               <Search className="w-12 h-12 mx-auto mb-4" />
@@ -351,7 +375,7 @@ export const ProblemList: React.FC<ProblemListProps> = ({ onProblemSelect }) => 
 
       {/* Results Summary */}
       <div className="mt-4 text-sm text-gray-600 dark:text-gray-400">
-        Showing {filteredProblems.length} of {problems.length} problems
+        Showing {visibleProblems.length} of {problems.length} problems
       </div>
     </div>
   );
