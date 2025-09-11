@@ -14,12 +14,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onProblemsClick, onProfileClick 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
+    <nav className="bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50">
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <div className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg">
+            <div className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-brand-500 to-brand-700 rounded-lg">
               <Code2 className="w-6 h-6 text-white" />
             </div>
             <div>
@@ -36,7 +36,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onProblemsClick, onProfileClick 
           <div className="hidden md:flex items-center space-x-6">
             <a
               href="/problems"
-              className="font-medium text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
+              className="font-medium text-brand-600 dark:text-brand-400 border-b-2 border-brand-600 dark:border-brand-400 hover:text-brand-700 dark:hover:text-brand-300 transition-colors"
             >
               Problems
             </a>
@@ -46,13 +46,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onProblemsClick, onProfileClick 
             <a href="/search" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
               Search
             </a>
-            <a href="/pricing" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+            <a href="/pricing" className="font-medium text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400">
               Pricing
             </a>
-            <a href="/checkout" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+            <a href="/checkout" className="font-medium text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400">
               Checkout
             </a>
-            <a href="/invoices" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+            <a href="/invoices" className="font-medium text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400">
               Invoices
             </a>
             <a href="/help" className="font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
