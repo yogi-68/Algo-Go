@@ -26,9 +26,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onProblemsClick, onProfileClick 
               <h1 className="text-xl font-bold text-gray-900 dark:text-white">
                 Algo-Go
               </h1>
-              <p className="text-xs text-gray-500 dark:text-gray-400 hidden sm:block">
-                Master algorithms with visualization
-              </p>
             </div>
           </div>
 
