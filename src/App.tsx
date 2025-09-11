@@ -4,18 +4,18 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import { ExecutionProvider } from './contexts/ExecutionContext';
 import { AuthContainer } from './features/auth/auth-container';
 import { LoadingSpinner } from './shared/ui/loading-spinner';
-import Pricing from './pages/Pricing';
-import TermsOfService from './pages/TermsOfService';
-import PrivacyPolicy from './pages/PrivacyPolicy';
-import RefundPolicy from './pages/RefundPolicy';
-import Explore from './pages/Explore';
-import SearchPage from './pages/Search';
-import Checkout from './pages/Checkout';
-import Invoices from './pages/Invoices';
-import HelpCenter from './pages/HelpCenter';
-import Feedback from './pages/Feedback';
-import DashboardPage from './pages/Dashboard';
-import ProblemRoute from './pages/ProblemRoute';
+const Pricing = React.lazy(() => import('./pages/Pricing'));
+const TermsOfService = React.lazy(() => import('./pages/TermsOfService'));
+const PrivacyPolicy = React.lazy(() => import('./pages/PrivacyPolicy'));
+const RefundPolicy = React.lazy(() => import('./pages/RefundPolicy'));
+const Explore = React.lazy(() => import('./pages/Explore'));
+const SearchPage = React.lazy(() => import('./pages/Search'));
+const Checkout = React.lazy(() => import('./pages/Checkout'));
+const Invoices = React.lazy(() => import('./pages/Invoices'));
+const HelpCenter = React.lazy(() => import('./pages/HelpCenter'));
+const Feedback = React.lazy(() => import('./pages/Feedback'));
+const DashboardPage = React.lazy(() => import('./pages/Dashboard'));
+const ProblemRoute = React.lazy(() => import('./pages/ProblemRoute'));
 import AppLayout from './layouts/AppLayout';
 import PublicLayout from './layouts/PublicLayout';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
@@ -25,6 +25,7 @@ const AppRoutes: React.FC = () => {
   if (isLoading) return <LoadingSpinner />;
 
   return (
+    <React.Suspense fallback={<LoadingSpinner />}>
     <Routes>
       {/* Public */}
       <Route element={<PublicLayout />}> 
@@ -50,6 +51,7 @@ const AppRoutes: React.FC = () => {
       {/* Fallback */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
+    </React.Suspense>
   );
 };
 
