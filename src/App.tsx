@@ -4,6 +4,11 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import { ExecutionProvider } from './contexts/ExecutionContext';
 import { AuthContainer } from './features/auth/auth-container';
 import { LoadingSpinner } from './shared/ui/loading-spinner';
+import AppLayout from './layouts/AppLayout';
+import PublicLayout from './layouts/PublicLayout';
+import { Routes, Route, Navigate } from 'react-router-dom';
+
+// Lazy-loaded components
 const Pricing = React.lazy(() => import('./pages/Pricing'));
 const TermsOfService = React.lazy(() => import('./pages/TermsOfService'));
 const PrivacyPolicy = React.lazy(() => import('./pages/PrivacyPolicy'));
@@ -14,12 +19,8 @@ const Checkout = React.lazy(() => import('./pages/Checkout'));
 const Invoices = React.lazy(() => import('./pages/Invoices'));
 const HelpCenter = React.lazy(() => import('./pages/HelpCenter'));
 const Feedback = React.lazy(() => import('./pages/Feedback'));
-const DashboardPage = React.lazy(() => import('./pages/Dashboard'));
 const ProblemRoute = React.lazy(() => import('./pages/ProblemRoute'));
 const ProblemsPage = React.lazy(() => import('./pages/Problems'));
-import AppLayout from './layouts/AppLayout';
-import PublicLayout from './layouts/PublicLayout';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 const AppRoutes: React.FC = () => {
   const { user, isLoading } = useAuth();
@@ -62,9 +63,7 @@ function App() {
     <ThemeProvider>
       <AuthProvider>
         <ExecutionProvider>
-          <BrowserRouter>
-            <AppRoutes />
-          </BrowserRouter>
+          <AppRoutes />
         </ExecutionProvider>
       </AuthProvider>
     </ThemeProvider>
