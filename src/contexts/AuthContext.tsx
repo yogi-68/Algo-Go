@@ -112,6 +112,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       // Check for demo account first
       if (email === 'demo@algogo.com' && password === 'demo123') {
+        console.log('Demo login detected, setting user state');
         const demoUser: User = {
           id: 'demo-user',
           email: 'demo@algogo.com',
@@ -121,6 +122,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         };
         setUser(demoUser);
         setSupabaseUser(null); // Demo user is not a Supabase user
+        console.log('Demo user set:', demoUser);
         return true;
       }
 

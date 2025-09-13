@@ -23,15 +23,20 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignUp }) => {
     e.preventDefault();
     setError('');
     try {
+      console.log('Attempting login with:', email, password);
       const success = await login(email, password);
+      console.log('Login result:', success);
       if (!success) {
         if (email === 'demo@algogo.com') {
           setError('Demo login failed. Please check your internet connection.');
         } else {
           setError('Invalid credentials. Try the demo account or create a new account in Supabase.');
         }
+      } else {
+        console.log('Login successful, should redirect to /problems');
       }
     } catch (err) {
+      console.error('Login error:', err);
       setError('Login failed: ' + (err instanceof Error ? err.message : 'Unknown error'));
     }
   };
