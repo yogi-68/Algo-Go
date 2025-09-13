@@ -325,3 +325,5 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ onBack }) => {
     </div>
   );
 };
+
+export default ProfilePage;

@@ -21,6 +21,7 @@ const HelpCenter = React.lazy(() => import('./pages/HelpCenter'));
 const Feedback = React.lazy(() => import('./pages/Feedback'));
 const ProblemRoute = React.lazy(() => import('./pages/ProblemRoute'));
 const ProblemsPage = React.lazy(() => import('./pages/Problems'));
+const ProfilePage = React.lazy(() => import('./features/auth/profile-page'));
 
 const AppRoutes: React.FC = () => {
   const { user, isLoading } = useAuth();
@@ -48,6 +49,7 @@ const AppRoutes: React.FC = () => {
         <Route path="/" element={<Navigate to="/problems" replace />} />
         <Route path="/problems" element={<ProblemsPage />} />
         <Route path="/problem/:id" element={<ProblemRoute />} />
+        <Route path="/profile" element={<ProfilePage onBack={() => window.history.back()} />} />
         <Route path="/invoices" element={<Invoices />} />
       </Route>
 

@@ -1,24 +1,22 @@
 import React, { useState } from 'react';
-import { Code2, Settings, Moon, Sun, Menu, X } from 'lucide-react';
-import { useLocation } from 'react-router-dom';
+import { Code2, Moon, Sun, Menu, X } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTheme } from '../../contexts/ThemeContext';
 
-interface NavbarProps {
-  onProblemsClick?: () => void;
-  onProfileClick?: () => void;
-}
+interface NavbarProps {}
 
-export const Navbar: React.FC<NavbarProps> = ({ onProblemsClick, onProfileClick }) => {
-  const { user, logout } = useAuth();
+export const Navbar: React.FC<NavbarProps> = () => {
+  const { user } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isActive = (path: string) => location.pathname === path;
 
   // Prefetch route chunks on hover to speed up navigation
-  const prefetch = (route: 'problems' | 'explore' | 'search' | 'pricing' | 'help') => {
+  const prefetch = (route: 'problems' | 'explore' | 'search' | 'pricing' | 'help' | 'profile') => {
     switch (route) {
       case 'problems':
         import('../../pages/Problems');
@@ -34,6 +32,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onProblemsClick, onProfileClick 
         break;
       case 'help':
         import('../../pages/HelpCenter');
+        break;
+      case 'profile':
+        import('../../features/auth/profile-page');
         break;
       default:
         break;
@@ -130,7 +131,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onProblemsClick, onProfileClick 
               <div className="flex items-center space-x-3">
                 {/* User Profile */}
                 <button
-                  onClick={onProfileClick}
+                  onClick={() => navigate('/profile')}
+                  onMouseEnter={() => prefetch('profile')}
                   className="flex items-center space-x-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg p-2 transition-colors"
                 >
                   <img
@@ -146,10 +148,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onProblemsClick, onProfileClick 
               </div>
             ) : (
               <div className="flex items-center space-x-3">
-                <button className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium">
+                <button 
+                  onClick={() => navigate('/auth')}
+                  className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium"
+                >
                   Sign In
                 </button>
-                <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium">
+                <button 
+                  onClick={() => navigate('/auth')}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium"
+                >
                   Sign Up
                 </button>
               </div>
