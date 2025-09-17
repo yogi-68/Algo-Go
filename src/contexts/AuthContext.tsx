@@ -39,6 +39,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [supabaseUser, setSupabaseUser] = useState<SupabaseUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Debug user state changes
+  useEffect(() => {
+    console.log('User state changed:', user);
+  }, [user]);
+
+  // Debug loading state changes
+  useEffect(() => {
+    console.log('Loading state changed:', isLoading);
+  }, [isLoading]);
+
   useEffect(() => {
     // Get initial session
     const getInitialSession = async () => {
@@ -122,6 +132,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         };
         setUser(demoUser);
         setSupabaseUser(null); // Demo user is not a Supabase user
+        setIsLoading(false); // Ensure loading is set to false for demo login
         console.log('Demo user set:', demoUser);
         return true;
       }

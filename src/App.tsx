@@ -25,6 +25,7 @@ const ProfilePage = React.lazy(() => import('./features/auth/profile-page'));
 
 const AppRoutes: React.FC = () => {
   const { user, isLoading } = useAuth();
+  console.log('AppRoutes render - user:', user, 'isLoading:', isLoading);
   if (isLoading) return <LoadingSpinner />;
 
   return (
